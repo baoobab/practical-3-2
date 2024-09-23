@@ -117,23 +117,26 @@ TComplex TComplex::operator-(TComplex c) {
 }
 
 bool TComplex::operator<(TComplex c) {
-    // Вычисляем радиусы
-    double thisRadius = sqrt(this->re * this->re + this->im * this->im);
-    double otherRadius = sqrt(c.re * c.re + c.im * c.im);
+//    // Вычисляем радиусы
+//    double thisRadius = sqrt(this->re * this->re + this->im * this->im);
+//    double otherRadius = sqrt(c.re * c.re + c.im * c.im);
 
-    // Если радиусы разные, сравниваем их
-    if (thisRadius != otherRadius) {
-        return thisRadius < otherRadius;
-    }
+//    // Если радиусы разные, сравниваем их
+//    if (thisRadius != otherRadius) {
+//        return thisRadius < otherRadius;
+//    }
 
-    // Если радиусы равны, сравниваем углы
-    double thisAngle = atan2(this->im, this->re);
-    double otherAngle = atan2(c.im, c.re);
+//    // Если радиусы равны, сравниваем углы
+//    double thisAngle = atan2(this->im, this->re);
+//    double otherAngle = atan2(c.im, c.re);
 
-    return thisAngle < otherAngle; // Сравниваем углы
+//    return thisAngle < otherAngle; // Сравниваем углы
+    return this->re*this->re + this->im*this->im < c.re*c.re + c.im*c.im; // TODO: odobrit' na CR
 }
 
 bool TComplex::operator>(TComplex c) {
-    return !this->operator<(c); // ЖОСКО ПРОВЕРИТЬЬЬЬЬ
+//    return !this->operator<(c); // ЖОСКО ПРОВЕРИТЬЬЬЬЬ
+    return this->re*this->re + this->im*this->im > c.re*c.re + c.im*c.im; // TODO: odobrit' na CR x2
+
 }
 

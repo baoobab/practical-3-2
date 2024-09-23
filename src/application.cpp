@@ -81,6 +81,7 @@ int TApplication::exec() {
             break;
         }
         case 4: { // TODO: fix the broken sort
+            // TODO: fixed, using modules to sravnenie, odobrit' na code review (CR)
             short int sCh = 0;
 
             cout << "0. ascending order" << "\n";
