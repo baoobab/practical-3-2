@@ -32,9 +32,26 @@ int TApplication::exec() {
             }
             arr.flushMemory();
 
+            //            if (!sCh) {
+            //                cout << "Elements (to stop it - enter any char): ";
+            //                while (cin >> item) arr.appendElement(item);
+            //            }  // TODO: remove legacy if approved on CR (code review) ((cristiano ronaldo))
             if (!sCh) {
-                cout << "Elements (to stop it - enter any char): ";
-                while (cin >> item) arr.appendElement(item);
+                cout << "Enter numbers (to stop - enter any non-numeric sequence): ";
+                while (true) {
+                    if (!(cin >> item)) {
+                        cin.clear();
+                        string stopSeq;
+                        cin >> stopSeq;
+                        if (stopSeq.length() < 2 || stopSeq[0] != stopSeq[1]) { // *magic condition
+                            break;
+                        } else {
+                            cout << "Invalid input. Enter complex numbers or a non-numeric sequence to stop: ";
+                        }
+                    } else {
+                        arr.appendElement(item);
+                    }
+                } // TODO: idk why its working *magic condition
             } else {
                 unsigned dimension;
                 cout << "Dimension (warn - this operation will delete the old array if it exists): ";
@@ -63,11 +80,12 @@ int TApplication::exec() {
             cout << "SKO (standard deviation): " << arr.standardDeviation() << "\n";
             break;
         }
-        case 4: {
+        case 4: { // TODO: fix the broken sort
             short int sCh = 0;
 
             cout << "0. ascending order" << "\n";
             cout << "1. descending order" << "\n";
+            cin.clear();
             cin >> sCh;
 
             if (!cin.good()) {
@@ -118,6 +136,7 @@ int TApplication::exec() {
             }
             cout << "\n";
             arr.replaceElement(index, value);
+            arr.print();
             break;
         }
         case 1: {
