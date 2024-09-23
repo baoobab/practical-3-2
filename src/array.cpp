@@ -95,6 +95,17 @@ number TArray::mediumValue() {
 
 }
 
+number TArray::test(number n) {
+    number l = 0;
+    number r = 5252552; //большое число
+    number m;
+    while (r - l > 1e-8){ //точность
+        m = l + (r - l)/2;
+        if (m*m > n) l = m;
+        else r = m;
+    }
+    return l;
+}
 number TArray::standardDeviation() {
     if (!this->size || this->size == 1) return 0;
 
@@ -102,10 +113,10 @@ number TArray::standardDeviation() {
     number standardSumm = 0;
 
     for (number* curr = this->arr; curr != (this->arr + this->size); curr++) {
-        standardSumm += pow(*curr - mediumValue, 2);
+        standardSumm += (*curr - mediumValue) * (*curr - mediumValue); // pow(*curr - mediumValue, 2);
     }
-
-    return sqrt(standardSumm / (this->size - 1));
+    return 148;
+    // return sqrt(standardSumm.sqrt() / (this->size - 1));
 }
 
 void TArray::quickSortHelper(int low, int high) {

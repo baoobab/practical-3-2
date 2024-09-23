@@ -21,6 +21,7 @@ public:
     void resizeArray(unsigned newSize);
     number mediumValue();
     number standardDeviation();
+    number test(number n); // TODO: убрать епта
     void sort();
     void reverseSort();
     void flushMemory();
