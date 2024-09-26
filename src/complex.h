@@ -8,26 +8,29 @@ using namespace std;
 class TComplex {
 private:
     double re, im;
-
-    // void setReal(double);
-    // void setImage(double);
 public:
     TComplex();
-    TComplex(const int&); // TODO: mb double
+    TComplex(const double&);
     TComplex(const double&, const double&);
+    double modulus(); // Модуль к.ч. - вещ. число
+    double argument(); // Аргумент к.ч. - вещ. число
     bool operator==(TComplex);
+    bool operator!=(TComplex);
     bool operator<(TComplex);
-    bool operator>(TComplex); // TODO: proverit' ЖОООООООСКО
+    bool operator>(TComplex);
+    bool operator>=(TComplex c);
+    bool operator<=(TComplex c);
     TComplex operator*(TComplex);
     TComplex operator/(TComplex);
     TComplex operator+(TComplex);
     TComplex& operator-(); // унарный минус
     TComplex operator-(TComplex); // бинарный минус
-    TComplex& operator +=(TComplex); // TODO: proverit'
+    TComplex& operator+=(TComplex);
+    TComplex& operator-=(TComplex);
     friend ostream& operator<<(ostream&, TComplex);
     friend istream& operator>>(istream&, TComplex&);
     friend TComplex pow(TComplex, int);
-    friend TComplex sqrt(TComplex num); // TODO: чекнуть неймспейс у френдли ф-ий в сорсах
+    friend TComplex sqrt(TComplex num);
 };
 
 #endif // COMPLEX_H

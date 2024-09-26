@@ -104,6 +104,7 @@ number TArray::standardDeviation() {
     for (number* curr = this->arr; curr != (this->arr + this->size); curr++) {
         standardSumm += pow(*curr - mediumValue, 2);
     }
+
     return sqrt(standardSumm / (this->size - 1));
 }
 

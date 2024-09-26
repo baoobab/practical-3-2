@@ -4,8 +4,7 @@
 TComplex::TComplex() {
 }
 
-TComplex::TComplex(const int& r) {
-    // TODO: podumat'
+TComplex::TComplex(const double& r) {
     this->re = r;
     this->im = 0;
 }
@@ -15,16 +14,14 @@ TComplex::TComplex(const double& r, const double& i) {
     this->im = i;
 }
 
-// void TComplex::setReal(double r) {
-//     this->re = r;
-// }
-// void TComplex::setImage(double i) {
-//     this->im = i;
-// }
-
-bool TComplex::operator ==(TComplex c) {
+bool TComplex::operator==(TComplex c) {
     return (this->re == c.re) && (this->im == c.im);
 }
+
+bool TComplex::operator!=(TComplex c) {
+    return !(*this == c); // Инвертируем оператор равенства
+}
+
 ostream& operator<<(ostream& os, TComplex c) {
     if (c.im < 0) os << c.re << c.im << "i";
     else os << c.re << "+" << c.im << "i";
@@ -32,19 +29,11 @@ ostream& operator<<(ostream& os, TComplex c) {
     return os;
 }
 
-
-// istream& operator>>(istream& is, TComplex& c) {
-//     is >> c.re >> c.im;
-//     return is;
-// }
-
 istream& operator>>(istream& is, TComplex& c) {
     double real, imag;
     if (is >> real >> imag) { // Проверяем успешность ввода
         c.re = real;
         c.im = imag;
-        // c.setReal(real);
-        // c.setImage(imag);
     }
     return is;
 }
@@ -102,6 +91,14 @@ TComplex& TComplex::operator+=(TComplex c) {
     return *this;
 }
 
+TComplex& TComplex::operator-=(TComplex c) {
+    this->re = this->re-c.re;
+    this->im = this->im-c.im;
+
+    return *this;
+}
+
+
 // Унарный минус
 TComplex& TComplex::operator-() {
     this->re = -this->re;
@@ -118,28 +115,44 @@ TComplex TComplex::operator-(TComplex c) {
     return TComplex(this->re - c.re, this->im - c.im);
 }
 
-bool TComplex::operator<(TComplex c) {
-//    // Вычисляем радиусы
-//    double thisRadius = sqrt(this->re * this->re + this->im * this->im);
-//    double otherRadius = sqrt(c.re * c.re + c.im * c.im);
-
-//    // Если радиусы разные, сравниваем их
-//    if (thisRadius != otherRadius) {
-//        return thisRadius < otherRadius;
-//    }
-
-//    // Если радиусы равны, сравниваем углы
-//    double thisAngle = atan2(this->im, this->re);
-//    double otherAngle = atan2(c.im, c.re);
-
-//    return thisAngle < otherAngle; // Сравниваем углы
-    return this->re*this->re + this->im*this->im < c.re*c.re + c.im*c.im; // TODO: odobrit' na CR
+// Функция для вычисления модуля
+double TComplex::modulus() {
+    return sqrt(this->re * this->re + this->im * this->im);
 }
 
-bool TComplex::operator>(TComplex c) {
-//    return !this->operator<(c); // ЖОСКО ПРОВЕРИТЬЬЬЬЬ
-    return this->re*this->re + this->im*this->im > c.re*c.re + c.im*c.im; // TODO: odobrit' na CR x2
+// Функция для вычисления аргумента
+double TComplex::argument() {
+    return atan2(this->im, this->re);
+}
 
+// Оператор больше
+bool TComplex::operator>(TComplex c) {
+    double r1 = this->modulus();
+    double r2 = c.modulus();
+    if (r1 != r2) {
+        return r1 > r2;
+    }
+    return this->argument() > c.argument();
+}
+
+// Оператор меньше
+bool TComplex::operator<(TComplex c) {
+    double r1 = this->modulus();
+    double r2 = c.modulus();
+    if (r1 != r2) {
+        return r1 < r2;
+    }
+    return this->argument() < c.argument();
+}
+
+// Оператор больше или равно
+bool TComplex::operator>=(TComplex c) {
+    return !(*this < c); // Если не меньше, то больше или равно
+}
+
+// Оператор меньше или равно
+bool TComplex::operator<=(TComplex c) {
+    return !(*this > c); // Если не больше, то меньше или равно
 }
 
 TComplex sqrt(TComplex num) {
