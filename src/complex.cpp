@@ -15,18 +15,20 @@ TComplex::TComplex(const double& r, const double& i) {
     this->im = i;
 }
 
-void TComplex::setReal(double r) {
-    this->re = r;
-}
-void TComplex::setImage(double i) {
-    this->im = i;
-}
+// void TComplex::setReal(double r) {
+//     this->re = r;
+// }
+// void TComplex::setImage(double i) {
+//     this->im = i;
+// }
 
 bool TComplex::operator ==(TComplex c) {
     return (this->re == c.re) && (this->im == c.im);
 }
 ostream& operator<<(ostream& os, TComplex c) {
-    os << c.re << "+" << c.im << "i";
+    if (c.im < 0) os << c.re << c.im << "i";
+    else os << c.re << "+" << c.im << "i";
+
     return os;
 }
 
@@ -39,23 +41,23 @@ ostream& operator<<(ostream& os, TComplex c) {
 istream& operator>>(istream& is, TComplex& c) {
     double real, imag;
     if (is >> real >> imag) { // Проверяем успешность ввода
-        c.setReal(real);
-        c.setImage(imag);
+        c.re = real;
+        c.im = imag;
+        // c.setReal(real);
+        // c.setImage(imag);
     }
     return is;
 }
 
-TComplex pow(TComplex& base, int exponent) {
+TComplex pow(TComplex base, int exponent) {
     TComplex result(1); // Начальное значение (1 + 0i)
 
     if (exponent == 0) {
         return result;
     }
 
-    TComplex current = base; // Текущая база
-
-    for (int i = 1; i < abs(exponent); i++) {
-        result = result * current; // Умножаем результат на базу
+    for (int i = 1; i <= abs(exponent); i++) {
+        result = result * base; // Умножаем результат на базу
     }
 
     if (exponent < 0) {
@@ -140,3 +142,14 @@ bool TComplex::operator>(TComplex c) {
 
 }
 
+TComplex sqrt(TComplex num) {
+    if (num.re == 0 && num.im == 0) {
+        return TComplex(0, 0); // Квадратный корень из нуля
+    }
+
+    double r = sqrt(num.re * num.re + num.im * num.im); // Модуль
+    double sqrtReal = sqrt((r + num.re) / 2);
+    double sqrtImag = (num.im >= 0 ? 1 : -1) * sqrt((r - num.re) / 2); // Сигнум для мнимой части
+
+    return TComplex(sqrtReal, sqrtImag);
+}

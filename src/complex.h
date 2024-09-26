@@ -9,8 +9,8 @@ class TComplex {
 private:
     double re, im;
 
-    void setReal(double);
-    void setImage(double);
+    // void setReal(double);
+    // void setImage(double);
 public:
     TComplex();
     TComplex(const int&); // TODO: mb double
@@ -24,10 +24,10 @@ public:
     TComplex& operator-(); // унарный минус
     TComplex operator-(TComplex); // бинарный минус
     TComplex& operator +=(TComplex); // TODO: proverit'
-    friend TComplex sqrt(TComplex);
     friend ostream& operator<<(ostream&, TComplex);
     friend istream& operator>>(istream&, TComplex&);
-    friend TComplex pow(TComplex&, int);
+    friend TComplex pow(TComplex, int);
+    friend TComplex sqrt(TComplex num); // TODO: чекнуть неймспейс у френдли ф-ий в сорсах
 };
 
 #endif // COMPLEX_H
